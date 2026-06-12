@@ -1,0 +1,18 @@
+{
+  "updated_at": "<YYYY-MM-DDTHH:MM:SSZ>",
+  "gate_name": "<name>",
+  "status": "<pass|fail|needs_review>",
+  "summary": "<short honest state summary>",
+  "checks": [
+    {
+      "name": "real_output_exists",
+      "status": "<pass|fail>",
+      "evidence": "<what proves it>"
+    },
+    {
+      "name": "next_step_is_exact",
+      "status": "<pass|fail>",
+      "evidence": "<what proves it>"
+    }
+  ]
+}

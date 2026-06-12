@@ -26,6 +26,22 @@ The core rule is simple:
 
 > simplify orchestration aggressively, but do not simplify the actual work
 
+## Architecture at a glance
+
+```mermaid
+flowchart LR
+    A["Primary Execution Thread"] --> B["Open Real Assets"]
+    B --> C["Write Real Outputs"]
+    C --> D["Run Hard Gate / Validator"]
+    D --> E["Update Truth Surface"]
+    E --> F["Write Exact Next Step"]
+    F --> A
+    E --> G{"Frontier Stale or Broken?"}
+    G -- "No" --> A
+    G -- "Yes" --> H["Fallback Automation"]
+    H --> E
+```
+
 ## Why this matters
 
 Many AI workflow systems optimize for liveness instead of usefulness.
@@ -77,12 +93,16 @@ Real progress means something important changed and the next worker can verify i
 
 - [docs/getting-started.md](docs/getting-started.md): the fastest way to apply the playbook to a real workflow.
 - [docs/final-architecture.md](docs/final-architecture.md): the full operating model and execution loop.
+- [docs/case-study-overnight-monorepo.md](docs/case-study-overnight-monorepo.md): a representative public case study for overnight AI work in software delivery.
 - [docs/use-cases.md](docs/use-cases.md): where this playbook is most useful and how to adapt it.
 - [docs/anti-patterns.md](docs/anti-patterns.md): common failure modes such as governance theater and candidate inflation.
 - [docs/design-rules.md](docs/design-rules.md): hard rules for handoffs, validation, start gates, and anti-simplification.
 - [docs/faq.md](docs/faq.md): answers to common implementation and positioning questions.
+- [docs/why-not-agent-swarms.md](docs/why-not-agent-swarms.md): the repository's point of view on when extra agents help and when they become theater.
+- [docs/discoverability.md](docs/discoverability.md): recommended GitHub description, topics, keywords, and sharing angles.
 - [docs/evolution.md](docs/evolution.md): how the model evolved from heavier orchestration to a leaner, more durable form.
 - [principles/](principles): short standalone principles you can reuse in your own workflow docs.
+- [starter-kit/](starter-kit): a minimal folder you can copy into a real project to try the model quickly.
 - [templates/](templates): reusable truth surfaces, handoff notes, audits, method learning, and hard-gate files.
 - [examples/](examples): small examples showing what the templates look like in practice.
 
@@ -92,9 +112,10 @@ If you want the shortest useful path through the repository:
 
 1. Read [docs/getting-started.md](docs/getting-started.md).
 2. Read [docs/final-architecture.md](docs/final-architecture.md).
-3. Copy the files in [templates/](templates) into your own project.
-4. Open [examples/README.md](examples/README.md) and pick the example closest to your workflow.
-5. Make your first validator fail on fake progress, not just total failure.
+3. Read [docs/case-study-overnight-monorepo.md](docs/case-study-overnight-monorepo.md) to see the model in a realistic setting.
+4. Copy [starter-kit/](starter-kit) or the files in [templates/](templates) into your own project.
+5. Open [examples/README.md](examples/README.md) and pick the example closest to your workflow.
+6. Make your first validator fail on fake progress, not just total failure.
 
 ## What makes this different
 
@@ -111,6 +132,14 @@ It is a control philosophy for making long-running AI work:
 Instead of adding more coordination by default, it asks a harder question:
 
 what is the smallest control surface that still keeps the work honest?
+
+## A representative case
+
+If you want one concrete story before diving into the templates, start with:
+
+- [Overnight Monorepo Maintenance Case Study](docs/case-study-overnight-monorepo.md)
+
+It shows how this playbook fits a workflow where AI works across many files, repeated tests, and overnight handoffs without being allowed to fake completion.
 
 ## Anti-hype stance
 
@@ -138,12 +167,15 @@ Suggested topics:
 
 - `ai-autonomy`
 - `ai-workflows`
+- `agentic-workflow`
 - `workflow-design`
 - `agentic-systems`
 - `automation`
 - `operations`
 - `human-in-the-loop`
 - `knowledge-work`
+- `context-engineering`
+- `coding-agents`
 - `prompt-engineering`
 - `playbook`
 

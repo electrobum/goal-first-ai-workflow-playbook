@@ -1,0 +1,19 @@
+{
+  "updated_at": "<YYYY-MM-DDTHH:MM:SSZ>",
+  "active_owner": "<primary-execution-thread>",
+  "current_phase": "<repair|validation|handoff>",
+  "current_target": "<one bounded real task>",
+  "last_substantive_action": "<last real change that mattered>",
+  "last_validator_result": {
+    "status": "<pass|fail|needs_review>",
+    "summary": "<what the validator currently proves>"
+  },
+  "next_exact_action": {
+    "task": "<next bounded task>",
+    "files_to_open": [
+      "<path/to/real/file>"
+    ],
+    "success_signal": "<what honest completion looks like>"
+  },
+  "stale_after_minutes": 90
+}
