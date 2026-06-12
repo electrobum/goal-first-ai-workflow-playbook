@@ -2,6 +2,10 @@
 
 Use this folder as the main reading path after the repository homepage.
 
+Chinese overview:
+
+- [README.zh-CN.md](../README.zh-CN.md)
+
 ## Recommended order
 
 1. [getting-started.md](getting-started.md)
