@@ -1,0 +1,25 @@
+{
+  "updated_at": "2026-06-12T10:15:00Z",
+  "active_owner": "goal-thread-regression-fix",
+  "current_phase": "repair",
+  "current_target": "Fix the regression where cached sessions expire immediately after refresh.",
+  "last_substantive_action": "Opened the cache middleware, reproduced the failure in a focused test, and isolated the timestamp comparison bug.",
+  "last_validator_result": {
+    "status": "needs_review",
+    "summary": "The root cause is known, but the fix is not complete until the regression test passes."
+  },
+  "next_exact_action": {
+    "task": "Patch the timestamp comparison in src/session/cache.ts and rerun the focused regression test.",
+    "files_to_open": [
+      "src/session/cache.ts",
+      "tests/session/cache-regression.test.ts"
+    ],
+    "success_signal": "The focused regression test fails before the patch and passes after it without breaking related session tests."
+  },
+  "stale_after_minutes": 45,
+  "fallback_automation_policy": "paused_unless_frontier_stale",
+  "notes": [
+    "A code diff without a passing regression test does not count as closure.",
+    "Keep the next step tied to the exact failing test."
+  ]
+}

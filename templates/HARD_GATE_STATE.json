@@ -1,0 +1,29 @@
+{
+  "updated_at": "<YYYY-MM-DDTHH:MM:SSZ>",
+  "gate_name": "<name-of-validator-or-hard-gate>",
+  "status": "<pass|fail|needs_review>",
+  "summary": "<short truthful summary>",
+  "checks": [
+    {
+      "name": "real_outputs_exist",
+      "status": "<pass|fail>",
+      "evidence": "<path/or-brief-proof>"
+    },
+    {
+      "name": "required_fields_closed",
+      "status": "<pass|fail>",
+      "evidence": "<path/or-brief-proof>"
+    },
+    {
+      "name": "no_header_only_outputs",
+      "status": "<pass|fail>",
+      "evidence": "<path/or-brief-proof>"
+    },
+    {
+      "name": "next_step_is_exact",
+      "status": "<pass|fail>",
+      "evidence": "<path/or-brief-proof>"
+    }
+  ],
+  "required_next_action": "<the next correction if this gate is not passing>"
+}

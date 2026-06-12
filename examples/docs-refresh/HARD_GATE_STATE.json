@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-06-12T09:32:00Z",
+  "gate_name": "release-docs-hard-gate",
+  "status": "fail",
+  "summary": "The rewritten guide exists, but one stale command flag remains in the reference docs.",
+  "checks": [
+    {
+      "name": "real_outputs_exist",
+      "status": "pass",
+      "evidence": "docs/setup.md was rewritten and docs/reference/cli.md was partially repaired."
+    },
+    {
+      "name": "required_fields_closed",
+      "status": "pass",
+      "evidence": "All sections in the docs checklist have an explicit status."
+    },
+    {
+      "name": "no_header_only_outputs",
+      "status": "pass",
+      "evidence": "The output is real prose and command content, not an empty checklist."
+    },
+    {
+      "name": "next_step_is_exact",
+      "status": "pass",
+      "evidence": "The next handoff points to the uninstall section in docs/reference/cli.md."
+    }
+  ],
+  "required_next_action": "Replace the stale flag in the uninstall example and rerun the snippet verification."
+}

@@ -1,0 +1,25 @@
+{
+  "updated_at": "2026-06-12T09:30:00Z",
+  "active_owner": "goal-thread-docs-refresh",
+  "current_phase": "validation",
+  "current_target": "Rewrite the setup guide and verify the command examples still run.",
+  "last_substantive_action": "Updated docs/setup.md and repaired three stale CLI examples using the current release branch.",
+  "last_validator_result": {
+    "status": "needs_review",
+    "summary": "The rewritten setup guide exists, but one command example still references an old flag."
+  },
+  "next_exact_action": {
+    "task": "Open docs/setup.md and docs/reference/cli.md, replace the old flag, then rerun the command snippet check.",
+    "files_to_open": [
+      "docs/setup.md",
+      "docs/reference/cli.md"
+    ],
+    "success_signal": "All documented commands match the current CLI output and the release hard gate passes."
+  },
+  "stale_after_minutes": 60,
+  "fallback_automation_policy": "paused_unless_frontier_stale",
+  "notes": [
+    "Do not count the docs pass as complete until command examples are verified.",
+    "A fresh timestamp without corrected examples is not progress."
+  ]
+}

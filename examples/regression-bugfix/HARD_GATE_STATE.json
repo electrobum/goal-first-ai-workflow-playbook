@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-06-12T10:17:00Z",
+  "gate_name": "session-regression-hard-gate",
+  "status": "fail",
+  "summary": "The root cause is isolated, but the workflow cannot close until the focused regression test and related session tests pass.",
+  "checks": [
+    {
+      "name": "real_outputs_exist",
+      "status": "pass",
+      "evidence": "A focused regression test exists and the failing path was reproduced from source."
+    },
+    {
+      "name": "required_fields_closed",
+      "status": "fail",
+      "evidence": "The fix status is still open because the patched behavior is not validated yet."
+    },
+    {
+      "name": "no_header_only_outputs",
+      "status": "pass",
+      "evidence": "The workflow produced a failing test and source-level diagnosis, not just a checklist."
+    },
+    {
+      "name": "next_step_is_exact",
+      "status": "pass",
+      "evidence": "The continuation note points to src/session/cache.ts and the exact regression test."
+    }
+  ],
+  "required_next_action": "Patch the boundary logic and rerun the focused regression test plus the related session suite."
+}

@@ -1,0 +1,24 @@
+{
+  "updated_at": "<YYYY-MM-DDTHH:MM:SSZ>",
+  "active_owner": "<goal-thread-or-human-owner>",
+  "current_phase": "<source-opening|repair|validation|handoff>",
+  "current_target": "<one bounded real task>",
+  "last_substantive_action": "<what source-backed action actually happened last>",
+  "last_validator_result": {
+    "status": "<pass|fail|needs_review>",
+    "summary": "<what the validator proved or failed to prove>"
+  },
+  "next_exact_action": {
+    "task": "<next bounded task>",
+    "files_to_open": [
+      "<path/to/file-or-ledger>"
+    ],
+    "success_signal": "<how you will know the task is honestly complete>"
+  },
+  "stale_after_minutes": 90,
+  "fallback_automation_policy": "paused_unless_frontier_stale",
+  "notes": [
+    "Keep this file compact and truthful.",
+    "Do not use it as a diary."
+  ]
+}
