@@ -1,124 +1,150 @@
 # Goal-First AI Workflow Playbook
 
-Design patterns for long-running AI workflows that keep making real progress.
+Design patterns, templates, and examples for long-running AI workflows that keep making real progress.
 
-This repository is a compact, publish-ready playbook for building AI workflows that stay useful over time. It focuses on a simple but hard problem: how to keep an AI system moving across long tasks without letting it drift into summaries, heartbeats, and busy-looking automation that produces little real value.
+AI systems rarely fail only by stopping.
 
-The central idea is straightforward:
+More often, they fail by staying busy:
 
-use one primary execution thread for real work, keep continuation state on disk, and enforce hard gates that measure outputs instead of activity.
+- notes keep growing;
+- status keeps refreshing;
+- multiple threads keep talking;
+- token usage keeps climbing;
+- but the real task barely moves.
 
-## Why this exists
+This repository is a practical playbook for avoiding that failure mode.
 
-Most long-running AI systems do not fail because they stop immediately.
+It shows how to run long-lived AI workflows with:
 
-They fail because they keep looking active while real progress slows down.
+- one primary execution thread;
+- file-backed continuation;
+- hard gates tied to outputs;
+- exact handoffs;
+- fallback automation only when recovery is actually needed.
 
-Common symptoms:
+The core rule is simple:
 
-- fresh notes keep appearing;
-- multiple threads look alive;
-- status files keep updating;
-- handoff text keeps growing;
-- but the actual task barely moves.
+> simplify orchestration aggressively, but do not simplify the actual work
 
-This repo distills a more durable alternative:
+## Why this matters
 
-- one primary execution thread does the real work;
-- compact files carry continuation truth across interruptions;
-- hard gates measure outputs instead of freshness;
-- fallback automations exist for recovery, not as the main work engine.
+Many AI workflow systems optimize for liveness instead of usefulness.
 
-The result is a workflow that is easier to resume, easier to audit, and much harder to fake.
+They are very good at proving that something is running, but much worse at proving that the target task is moving forward in a reliable, inspectable way.
 
-## Why it is useful
+This playbook is for people who want the opposite:
 
-You can use this playbook if you are building:
+- less theater;
+- lower token waste;
+- better resumability;
+- clearer accountability;
+- stronger separation between activity and progress.
+
+## Who this is for
+
+This repository is useful if you are building:
 
 - agentic coding workflows;
-- document-processing pipelines;
-- multi-step analysis systems;
-- long-running assistants for operations or knowledge work;
-- any AI loop where continuity matters more than one-shot prompting.
+- multi-step internal assistants;
+- document or knowledge pipelines;
+- long-running operational automations;
+- evaluation or review loops;
+- any AI workflow that has to survive interruption and resume correctly.
 
-It is especially useful when you want:
+## The model in one minute
 
-- fewer orchestration layers;
-- clearer handoffs;
-- lower token waste;
-- better recovery after interruption;
-- stricter separation between activity and progress.
+The recommended loop is:
 
-## What is included
-
-- [docs/evolution.md](docs/evolution.md): how the operating model evolved from single-thread execution to automation-heavy orchestration and back to a leaner design.
-- [docs/final-architecture.md](docs/final-architecture.md): the recommended architecture, loop, and wake conditions for automation.
-- [docs/anti-patterns.md](docs/anti-patterns.md): common failure modes such as governance theater, candidate inflation, and memory-first drift.
-- [docs/design-rules.md](docs/design-rules.md): publication-ready rules for start gates, closure states, validation, and anti-simplification.
-- [docs/repository-positioning.md](docs/repository-positioning.md): recommended GitHub name, subtitle, topics, and framing.
-- [principles/](principles): short standalone principles that can be linked or reused independently.
-- [templates/](templates): reusable truth surfaces, handoff notes, audit notes, and hard-gate templates.
-- [examples/](examples): two small examples showing how the templates work in practice.
-
-## Core model
-
-The recommended architecture is:
-
-1. Read a compact truth surface first.
+1. Read a compact truth surface.
 2. Pick one bounded real task.
-3. Open actual source assets or factual ledgers.
-4. Write evidence rows or other source-backed outputs.
-5. Run a focused validator or hard gate.
-6. Write an exact continuation note.
-7. Only wake automation if the primary worker is stale, unavailable, or the control surface needs recovery.
+3. Open the real assets or ledgers.
+4. Write source-backed outputs.
+5. Run a focused validator.
+6. Leave an exact continuation note.
+7. Wake fallback automation only if the main path is stale or broken.
 
-This approach is intentionally conservative about what counts as progress.
+What does not count as progress:
 
-Fresh timestamps are not progress.
-More notes are not progress.
-More agents are not progress.
+- fresh timestamps;
+- more summaries;
+- more agents;
+- more status churn;
+- more coordination with no evidence.
 
-Real progress means the system changed something that matters and left enough evidence for the next worker to continue correctly.
+Real progress means something important changed and the next worker can verify it.
 
-## Quick start
+## What you get in this repo
 
-1. Read [docs/final-architecture.md](docs/final-architecture.md).
-2. Copy the files in [templates/](templates) into your own project.
-3. Fill in a real `AUTONOMY_TRUTH_SURFACE.json`, `HARD_GATE_STATE.json`, and `NEXT_CONTINUE_EXACTLY_FROM_HERE.md`.
-4. Keep your validator tied to real outputs, not heartbeat freshness.
-5. Use the examples as small reference implementations for your own workflow.
+- [docs/getting-started.md](docs/getting-started.md): the fastest way to apply the playbook to a real workflow.
+- [docs/final-architecture.md](docs/final-architecture.md): the full operating model and execution loop.
+- [docs/use-cases.md](docs/use-cases.md): where this playbook is most useful and how to adapt it.
+- [docs/anti-patterns.md](docs/anti-patterns.md): common failure modes such as governance theater and candidate inflation.
+- [docs/design-rules.md](docs/design-rules.md): hard rules for handoffs, validation, start gates, and anti-simplification.
+- [docs/faq.md](docs/faq.md): answers to common implementation and positioning questions.
+- [docs/evolution.md](docs/evolution.md): how the model evolved from heavier orchestration to a leaner, more durable form.
+- [principles/](principles): short standalone principles you can reuse in your own workflow docs.
+- [templates/](templates): reusable truth surfaces, handoff notes, audits, method learning, and hard-gate files.
+- [examples/](examples): small examples showing what the templates look like in practice.
 
-## What this repo does not claim
+## Start here
 
-This project is intentionally anti-hype. It does not claim:
+If you want the shortest useful path through the repository:
+
+1. Read [docs/getting-started.md](docs/getting-started.md).
+2. Read [docs/final-architecture.md](docs/final-architecture.md).
+3. Copy the files in [templates/](templates) into your own project.
+4. Open [examples/README.md](examples/README.md) and pick the example closest to your workflow.
+5. Make your first validator fail on fake progress, not just total failure.
+
+## What makes this different
+
+This is not a framework that tries to automate everything.
+
+It is a control philosophy for making long-running AI work:
+
+- easier to trust;
+- easier to resume;
+- easier to audit;
+- harder to game;
+- cheaper to run over time.
+
+Instead of adding more coordination by default, it asks a harder question:
+
+what is the smallest control surface that still keeps the work honest?
+
+## Anti-hype stance
+
+This project intentionally avoids grand claims.
+
+It does not promise:
 
 - universal autonomy;
-- fully self-driving work with no oversight;
+- fully self-driving work without oversight;
 - guaranteed correctness;
 - a magic multi-agent controller;
-- a domain-independent replacement for real validation.
+- a replacement for real domain validation.
 
-It is a practical system design playbook for making AI workflows more durable, inspectable, and useful.
+It is a practical operating playbook for teams and individuals who want AI workflows to be useful for longer than a single prompt.
 
-## Suggested GitHub settings
+## Suggested GitHub metadata
 
-Recommended repository names:
+Repository name ideas:
 
 - `goal-first-ai-workflow-playbook`
 - `goal-first-autonomy`
 - `ai-workflow-continuity-playbook`
 
-Suggested GitHub topics:
+Suggested topics:
 
 - `ai-autonomy`
+- `ai-workflows`
 - `workflow-design`
 - `agentic-systems`
-- `prompt-engineering`
-- `human-in-the-loop`
-- `operations`
-- `ai-workflows`
-- `knowledge-work`
 - `automation`
+- `operations`
+- `human-in-the-loop`
+- `knowledge-work`
+- `prompt-engineering`
 - `playbook`
 
 ## License
