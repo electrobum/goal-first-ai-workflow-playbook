@@ -1,4 +1,4 @@
-﻿# Goal-First AI Workflow Playbook
+﻿# Goal-First AI Workflow Playbook | Goal 优先 AI 工作流手册
 
 > English | [中文](README.zh-CN.md)
 
